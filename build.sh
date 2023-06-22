@@ -34,14 +34,14 @@ GCCbPath="${MainGCCbPath}"
 # Identity
 VERSION=9x13
 KERNELNAME=TheOneMemory
-CODENAME=Hayzel
-VARIANT=EAS
+CODENAME=Onyx
+VARIANT=HMP
 
 # Show manufacturer info
 MANUFACTURERINFO="ASUSTek Computer Inc."
 
 # Clone Kernel Source
-git clone --depth=1 https://$USERNAME:$TOKEN@github.com/Tiktodz/android_kernel_asus_sdm636 -b caf-eas kernel
+git clone --depth=1 https://$USERNAME:$TOKEN@github.com/Ruega/kernel_asus_sdm660 -b oc kernel
 
 # Clone Snapdragon Clang
 ClangPath=${MainClangPath}
@@ -106,7 +106,7 @@ make -j$(nproc) ARCH=arm64 SUBARCH=arm64 O=out \
    fi
 
    msg "|| Cloning AnyKernel ||"
-   git clone --depth=1 https://github.com/strongreasons/AnyKernel3 -b eas AnyKernel
+   git clone --depth=1 https://github.com/strongreasons/AnyKernel3 -b hmp-12 AnyKernel
 	cp $IMAGE AnyKernel
 }
 # Push kernel to telegram
@@ -123,7 +123,7 @@ function push() {
         -<code>$DATE</code>
 
         <b>🐧 Linux Version: </b>
-        -<code>4.4.205</code>
+        -<code>4.4.302</code>
 
          <b>💿 Compiler: </b>
         -<code>$KBUILD_COMPILER_STRING</code>
@@ -155,8 +155,8 @@ function zipping() {
     msg "|| Signing Zip ||"
     tg_post_msg "<code>🔑 Signing Zip file with AOSP keys..</code>"
 
-    curl -sLo zipsigner.jar https://raw.githubusercontent.com/MrRob0-X/zipsigner-3.0/zipsigner/zipsigner.jar
-    java -jar zipsigner.jar "$ZIP_FINAL".zip "$ZIP_FINAL"-signed.zip
+    curl -sLo zipsigner-3.0.jar https://github.com/Magisk-Modules-Repo/zipsigner/raw/master/bin/zipsigner-3.0-dexed.jar
+    java -jar zipsigner-3.0.jar "$ZIP_FINAL".zip "$ZIP_FINAL"-signed.zip
     ZIP_FINAL="$ZIP_FINAL-signed"
     cd ..
 }
